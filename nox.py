@@ -41,6 +41,12 @@ import nox
 REPO_TOOLS_REQ =\
     'git+https://github.com/GoogleCloudPlatform/python-repo-tools.git'
 
+# flake8 3 has some breaking changes that broke flake8-import-order v0.8
+FLAKE8_IMPORT_ORDER=(
+    'git+https://github.com/PyCQA/flake8-import-order.git'
+    '@f0166a7'
+    '#egg=flake8-import-order')
+
 # Arguments used for every invocation of py.test.
 COMMON_PYTEST_ARGS = [
     '-x', '--no-success-flaky-report', '--cov', '--cov-config',
@@ -243,7 +249,7 @@ def session_travis(session, subsession):
 
 def session_lint(session):
     """Lints each sample."""
-    session.install('flake8', 'flake8-import-order')
+    session.install('flake8', FLAKE8_IMPORT_ORDER)
     session.run(
         'flake8', '--builtin=gettext', '--max-complexity=10',
         '--import-order-style=google',
